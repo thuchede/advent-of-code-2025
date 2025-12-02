@@ -66,4 +66,4 @@ EOF
 
 touch  ./src/input/sample$DAY.txt
 
-curl https://adventofcode.com/2024/day/$DAY_EXACT/input -H "cookie: session=$SESSION">> ./src/input/day$DAY.txt
+curl https://adventofcode.com/2025/day/$DAY_EXACT/input -H "cookie: session=$SESSION">> ./src/input/day$DAY.txt
