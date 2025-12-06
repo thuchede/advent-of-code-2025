@@ -54,6 +54,7 @@ lazy_static! {
     static ref RE: Regex = Regex::new(r"^(\d+)\1+$").unwrap();
 }
 
+#[allow(dead_code)]
 fn find_all_invalid_ids((start, end): (i64, i64)) -> Vec<i64> {
     let mut res: Vec<i64> = vec![];
     for id in start..=end {
@@ -89,6 +90,7 @@ fn find_repeat_pattern((start, end): (i64, i64)) -> Vec<i64> {
     res
 }
 
+#[allow(dead_code)]
 fn read_from_v2(filepath: &str) -> i64 {
     let sample = helpers::read(filepath).unwrap();
     let ranges = sample.iter()
