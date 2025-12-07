@@ -7,15 +7,16 @@ mod day03;
 mod day04;
 mod day05;
 mod day06;
+mod day07;
 
 fn main() {
     let time_for_part1 = Instant::now();
-    let part1 = day06::part_1();
+    let part1 = day07::part_1();
     let time1 = time_for_part1.elapsed().as_micros();
     println!("{}", part1);
     println!("Done in {}µs", time1);
     let time_for_part2 = Instant::now();
-    let part2 = day06::part_2();
+    let part2 = day07::part_2();
     let time2 = time_for_part2.elapsed().as_micros();
     println!("{}", part2);
     println!("Done in {}µs", time2);
