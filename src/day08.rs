@@ -1,4 +1,3 @@
-use nalgebra::{distance, Point3};
 use crate::helpers;
 
 #[allow(dead_code)]
@@ -11,19 +10,23 @@ pub fn part_2() -> f64 {
     read_from_v2("src/input/day08.txt")
 }
 
+fn distance(p1: &(f64, f64, f64), p2: &(f64, f64, f64)) -> f64 {
+    (p1.0 - p2.0).powi(2) + (p1.1 - p2.1).powi(2) + (p1.2 - p2.2).powi(2)
+}
+
 
 fn read_from(filepath: &str, iterations: usize) -> i64 {
     let sample = helpers::read(filepath).unwrap();
     let coordinates = sample.iter().map(|s| match s.split(",").collect::<Vec<&str>>().as_slice() {
         [x, y, z] => {
-            Point3::new(x.parse::<f64>().unwrap(), y.parse::<f64>().unwrap(), z.parse::<f64>().unwrap())
+            (x.parse::<f64>().unwrap(), y.parse::<f64>().unwrap(), z.parse::<f64>().unwrap())
         },
         // The match is technically exhaustive for a [T; 3] array, 
         // so this line is technically unreachable but required because we're using a Vec
-        _ => Point3::new(0.0, 0.0, 0.0), // added for exhausitivity but should not be hit
-    }).collect::<Vec<Point3<f64>>>();
+        _ => (0.0, 0.0, 0.0), // added for exhausitivity but should not be hit
+    }).collect::<Vec<(f64,f64,f64)>>();
     let size = coordinates.len();
-    let mut distances: Vec<(f64, (Point3<f64>, Point3<f64>))> = vec![];
+    let mut distances: Vec<(f64, ((f64,f64,f64), (f64,f64,f64)))> = vec![];
     // we build all the pair distances
     for i in 0..size-1 {
         for j in i+1..size-1 {
@@ -34,7 +37,7 @@ fn read_from(filepath: &str, iterations: usize) -> i64 {
         }
     }
     distances.sort_by(|a, b| a.0.partial_cmp(&b.0).unwrap());
-    let mut circuits: Vec<Vec<Point3<f64>>>= vec![];
+    let mut circuits: Vec<Vec<(f64,f64,f64)>>= vec![];
     for i in 0..iterations-1 {
         let (_, (p1, p2)) = &distances[i];
         let snapshot = circuits.clone();
@@ -88,13 +91,13 @@ fn read_from(filepath: &str, iterations: usize) -> i64 {
 fn read_from_v2(filepath: &str) -> f64 {
     let sample = helpers::read(filepath).unwrap();
     let coordinates = sample.iter().map(|s| match s.split(",").collect::<Vec<&str>>().as_slice() {
-        [x, y, z] => Point3::new(x.parse::<f64>().unwrap(), y.parse::<f64>().unwrap(), z.parse::<f64>().unwrap()),
+        [x, y, z] => (x.parse::<f64>().unwrap(), y.parse::<f64>().unwrap(), z.parse::<f64>().unwrap()),
         // The match is technically exhaustive for a [T; 3] array, 
         // so this line is technically unreachable but required because we're using a Vec
-        _ => Point3::new(0.0, 0.0, 0.0),
-    }).collect::<Vec<Point3<f64>>>();
+        _ => (0.0, 0.0, 0.0),
+    }).collect::<Vec<(f64,f64,f64)>>();
     let size = coordinates.len();
-    let mut distances: Vec<(f64, (Point3<f64>, Point3<f64>))> = vec![];
+    let mut distances: Vec<(f64, ((f64,f64,f64), (f64,f64,f64)))> = vec![];
     // we build all the pair distances
     for i in 0..size-1 {
         for j in i+1..size {
@@ -105,7 +108,7 @@ fn read_from_v2(filepath: &str) -> f64 {
         }
     }
     distances.sort_by(|a, b| a.0.partial_cmp(&b.0).unwrap());
-    let mut circuits: Vec<Vec<Point3<f64>>>= vec![];
+    let mut circuits: Vec<Vec<(f64,f64,f64)>>= vec![];
     let mut result = 0f64;
     for i in 0..distances.len() {
         let (_, (p1, p2)) = &distances[i];
@@ -153,7 +156,7 @@ fn read_from_v2(filepath: &str) -> f64 {
         }
         // once we have only one circuit with all points we can exit
         if circuits[0].len() == coordinates.len() {
-            result = p1.x * p2.x;
+            result = p1.0 * p2.0;
             break;
         }
     }
