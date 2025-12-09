@@ -6,8 +6,8 @@ pub fn part_1() -> i64 {
 }
 
 #[allow(dead_code)]
-pub fn part_2() -> f64 {
-    read_from_v2("src/input/day08.txt")
+pub fn part_2() -> i64 {
+    read_from_v2("src/input/day08.txt") as i64
 }
 
 fn distance(p1: &(f64, f64, f64), p2: &(f64, f64, f64)) -> f64 {
@@ -179,9 +179,6 @@ mod tests {
         let res = read_from("src/input/sample08.txt", 10);
         assert_eq!(res, 40);
     }
-    // 162,817,812 and 425,690,689
-    // 162,817,812 and 431,825,988
-    // 5,4,2
 
     #[test]
     fn test_read_from_v2() {
@@ -192,6 +189,6 @@ mod tests {
     #[test]
     fn test_part_2() {
         let res = part_2();
-        assert_eq!(res, 7499461416f64);
+        assert_eq!(res, 7499461416i64);
     }
 }

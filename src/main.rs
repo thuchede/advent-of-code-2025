@@ -19,7 +19,7 @@ fn main() {
     println!("Done in {}µs", time1);
     let time_for_part2 = Instant::now();
     let part2 = day09::part_2();
-    let time2 = time_for_part2.elapsed().as_secs();
+    let time2 = time_for_part2.elapsed().as_millis();
     println!("{}", part2);
-    println!("Done in {}s", time2);
+    println!("Done in {}ms", time2);
 }

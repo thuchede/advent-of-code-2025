@@ -1,6 +1,5 @@
-use std::time::Instant;
 use crate::helpers;
-use geo::{Covers, coord, point, polygon, Contains, ContainsProperly, Coord, Intersects, LineString, Polygon, Rect, Within};
+use geo::{Covers, coord, Coord, Intersects, LineString, Polygon, Rect};
 
 #[allow(dead_code)]
 pub fn part_1() -> i64 {
@@ -8,8 +7,8 @@ pub fn part_1() -> i64 {
 }
 
 #[allow(dead_code)]
-pub fn part_2() -> f64 {
-    read_from_v2("src/input/day09.txt")
+pub fn part_2() -> i64 {
+    read_from_v2("src/input/day09.txt") as i64
 }
 
 
@@ -68,6 +67,9 @@ fn read_from_v2(filepath: &str) -> f64 {
                 coord! { x: x1 as f64, y: y1 as f64 },
                 coord! { x: x2 as f64, y: y2 as f64 },
             );
+            if !polygon.intersects(&coord!{x: x1, y: y2}) || !polygon.intersects(&coord!{x: x2, y: y1}) {
+                continue;
+            }
             let in_polygon = polygon.covers(&rect);
             if in_polygon && area > max  {
                 max = area;
@@ -106,8 +108,8 @@ mod tests {
         ];
 
         let polygon = Polygon::new(line_string.clone(), vec![]);
-        assert!(polygon.covers(&point!(x: 0., y: 1.)));
-        assert!(polygon.intersects(&point!(x: 0., y: 1.)));
+        assert!(polygon.covers(&coord!(x: 0., y: 1.)));
+        assert!(polygon.intersects(&coord!(x: 0., y: 1.)));
     }
 
     #[test]
@@ -119,6 +121,6 @@ mod tests {
     #[test]
     fn test_part_2() {
         let res = part_2();
-        assert_eq!(res, 1552139370f64);
+        assert_eq!(res, 1552139370i64);
     }
 }
