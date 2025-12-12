@@ -15,6 +15,7 @@ mod day08;
 mod day09;
 mod day10;
 mod day11;
+mod day12;
 
 fn main() {
     let args: Vec<String> = env::args().collect();
@@ -53,6 +54,7 @@ fn bench() {
         ("day09", day09::part_1, day09::part_2),
         ("day10", day10::part_1, day10::part_2),
         ("day11", day11::part_1, day11::part_2),
+        ("day12", day12::part_1, day12::part_2),
     ];
     println!("| day## | part1 | part2 |");
     println!("|:-----:|:-----:|:-----:|");
